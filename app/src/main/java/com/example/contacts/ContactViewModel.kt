@@ -2,6 +2,7 @@ package com.example.contacts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,7 +18,6 @@ class ContactViewModel(
 ) : ViewModel(){
     private val _state = MutableStateFlow(ContactState())
     private val _sortType = MutableStateFlow(SortType.FIRST_NAME)
-
 
     private val _contacts = _sortType
         .flatMapLatest { sortType ->
@@ -36,7 +36,7 @@ class ContactViewModel(
     fun onEvent(event: ContactEvent){
         when(event){
             is ContactEvent.DeleteContact -> {
-                viewModelScope.launch {
+                viewModelScope.launch (Dispatchers.IO){
                     dao.deleteContact(event.contact)
                 }
             }
@@ -60,7 +60,7 @@ class ContactViewModel(
                     phoneNumber = phoneNumber
                 )
 
-                viewModelScope.launch {
+                viewModelScope.launch (Dispatchers.IO){
                     dao.insertContact( contact )
                 }
 
