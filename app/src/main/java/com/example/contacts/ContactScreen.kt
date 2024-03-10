@@ -20,19 +20,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun ContactScreen(
     state: ContactState,
     onEvent: (ContactEvent) -> Unit
-
 ){
     Scaffold (
         floatingActionButton = {
             FloatingActionButton(onClick = { onEvent(ContactEvent.ShowDialog)}) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Contact")
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add Contact"
+                )
             }
         },
         topBar = {
@@ -78,11 +79,9 @@ fun ContactItem(
             )
         }
         Spacer(modifier = Modifier.weight(1f))
-
         Icon(
             imageVector = Icons.Default.Delete,
             contentDescription = "delete contact",
-            tint = Color.Red,
             modifier = Modifier
                 .size(33.dp)
                 .align(Alignment.CenterVertically)
